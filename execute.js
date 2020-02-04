@@ -13,7 +13,7 @@ var checkSpan = (name) => {
         }
     }
   }
-//
+
 var checkTag = (tagname,name) => {
     var s = document.getElementsByTagName(tagname);
     for (i = 0;i < s.length; i++) {
