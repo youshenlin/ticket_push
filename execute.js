@@ -5,33 +5,8 @@ const rotateEvent = () => {
     document.body.style.transform = '';
   }
 
-var checkSpan = (name) => {
-    var s = document.getElementsByTagName("span");
-    for (i = 0;i < s.length; i++) {
-        if (s[i].innerText === name) {
-            return "check";
-        }
-    }
-  }
-
 var checkTag = (tagname,name) => {
     var s = document.getElementsByTagName(tagname);
-    for (i = 0;i < s.length; i++) {
-        if (s[i].innerText === name) {
-            return "check";
-        }
-    }
-  }
-  var checkHtwo = (name) => {
-    var s = document.getElementsByTagName("h2");
-    for (i = 0;i < s.length; i++) {
-        if (s[i].innerText === name) {
-            return "check";
-        }
-    }
-  }
-  var checkTh = (name) => {
-    var s = document.getElementsByTagName("th");
     for (i = 0;i < s.length; i++) {
         if (s[i].innerText === name) {
             return "check";
@@ -71,6 +46,11 @@ var checkpayment_kktix = (name) => {
   var clickForClass = (classname,index) => {
     if(a = document.getElementsByClassName(classname)[index]){
         a.click();
+    }
+  }
+  var checkClassName  = (classname) => {
+    if(document.getElementsByClassName(classname).length > 0){
+        return 'check';
     }
   }
   var clickForChildClass = (classname,index,child) => {
@@ -124,52 +104,6 @@ var checkpayment_kktix = (name) => {
             }
         });
    }
-
-
-var always = (inputData) => {
-    console.log(inputData);
-    if(checkSpan("自行選位") === "check"){
-        var ticket = inputData.ticket;
-        var ticketNumber = inputData.ticketNumber;
-        var idNumber = inputData.idNumber;
-        var creditNumber = inputData.creditNumber;
-        var creditYear = inputData.creditYear;
-        var creditMonth = inputData.creditMonth;
-        var creditCheck = inputData.creditCheck;
-
-        //選要買的票價 [0] 就是第一個 依此類推..
-        if(a = document.getElementsByClassName("btn-default plus")[(ticket-1)]){
-            for (i = 0;i < ticketNumber; i++) {
-                a.click();
-            }
-        }
-
-
-            //按兩次我同意
-            clickForClass('ng-pristine ng-untouched ng-valid ng-empty',0);
-            clickForClass('ng-pristine ng-untouched ng-valid ng-empty',1);
-            setTimeout(clickenter, 1000);
-            
-            clickForClass('btn btn-primary btn-lg ng-isolate-scope',0);
-
-    }else if(checkClass("選購的票券","caption ng-binding") === "check"){
-        clickbtn("完成選位",".btn-primary.ng-binding")
-    }
-    setTimeout(function(){ 
-        var idNumber = inputData.idNumber;
-//var a = document.getElementsByClassName("ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required")[1].nextSibling
-        clickForClass('btn btn-primary btn-lg ng-binding ng-isolate-scope',0);
-        setTimeout(function(){ 
-            if(a = document.getElementsByClassName("ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-valid-pattern")[0]){
-                a.value = idNumber;
-            }
-            checkpayment_kktix('ATM 虛擬帳號');
-        },800);
-    
-     }, 800);
-
-    
-}
 
 
 //ibon 搶票
@@ -262,49 +196,39 @@ var toryunTicket = (inputData) => {
     }
 
 
+var kktixPush = () => {
+    if(document.getElementsByClassName("btn-default plus").length > 0){
+        alert(123);
+    }
+}
 
+var ibonPush = () => {
+    var s = document.getElementsByClassName("deadline");
+    for (i = 0;i < s.length; i++) {
+        if (s[i].innerText != '已售完') {
+            alert(i);
+            //0就是第一個
+        }
+    }
+}
 var getChrome = (checkFun) => {
     chrome.storage.local.get("checktest", items=>{
         if(items.checktest){
-        var ticket = items.checktest.ticket;
-        var ticketNumber = items.checktest.ticketNumber;
-        var idNumber = items.checktest.idNumber;
-        var ticketDate = items.checktest.ticketDate;
-        var timeCheckHour = items.checktest.timeCheckHour;
-        var timeChecMin = items.checktest.timeChecMin;
-        var timeCheckSecond = items.checktest.timeCheckSecond;
         var startCheck = items.checktest.startCheck;
-        var chooseSystem = items.checktest.chooseSystem;
-        var NowDate=new Date();
-        var timeNow=(NowDate.getHours()*10000)+(NowDate.getMinutes()*100)+(NowDate.getSeconds());
-        var timeInput = (timeCheckHour*10000)+(timeChecMin*100)+(timeCheckSecond*1);
-            if(startCheck == '0' && checkFun == 'start' && chooseSystem == '0'){
-                setTimeout(function(){always(items.checktest);}, 1000);
-            }else if(startCheck == '0' && checkFun == 'start' && chooseSystem == '1'){
-                setTimeout(function(){ibonTicket(items.checktest);}, 500);
-            }else if(startCheck == '0' && checkFun == 'start' && chooseSystem == '2'){
-                setTimeout(function(){toryunTicket(items.checktest);}, 500);
-            }
-            else if (startCheck == '0' && checkFun == 'time' && chooseSystem != '2'){
-                if(timeNow <= timeInput){
-                    console.log("開始倒數");
-                    console.log(timeInput);
-                    var setTime = timeCheckHour+':'+timeChecMin+':'+timeCheckSecond;//設定時間
-                    setInterval(function(){ checkTime(setTime); },1000);
-                }
-            }
-            else if (startCheck == '0' && checkFun == 'time' && chooseSystem == '2'){
-                if(timeNow <= timeInput){
-                    console.log("開始倒數");
-                    console.log(timeInput);
-                    var setTime = timeCheckHour+':'+timeChecMin+':'+timeCheckSecond;//設定時間
-                    setInterval(function(){ checkTimeFortoryun(setTime,(ticketDate-1)); },1000);
-                }
+        console.log(startCheck);
+            if(startCheck == '0' && checkFun == 'start' && domainName == 'kktix.com'){
+                setTimeout(function(){kktixPush();}, 1000);
+                setTimeout(function(){window.location.reload();}, 30000);
+            }else if(startCheck == '0' && checkFun == 'start' && domainName == 'ticket.ibon.com.tw'){
+                setTimeout(function(){ibonPush();}, 1000);
+                setTimeout(function(){window.location.reload();}, 30000);
             }
         }
     });
 }
+var domainName = location.host;
   getChrome('start');
+
 
   const onMessage = async (message) => {
     switch (message.action) {
