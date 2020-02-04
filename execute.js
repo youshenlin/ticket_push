@@ -211,6 +211,26 @@ var ibonPush = () => {
         }
     }
 }
+
+var toryunPush = () => {
+    //tr gridc fcTxt
+//document.getElementsByClassName('gridc fcTxt')[0].childNodes[1].innerText //2020/02/22 (六) 19:30
+//document.getElementsByClassName('gridc fcTxt')[0].childNodes[2].innerText  //吳青峰《太空備忘記2020》巡迴演唱會"
+//document.getElementsByClassName('gridc fcTxt')[0].childNodes[4].innerText != 已售完
+
+
+    clickForClass('btn btn-default btn-lg',0);
+    setTimeout(function(){
+        var s = document.getElementsByClassName("gridc fcTxt");
+        for (i = 0;i < s.length; i++) {
+            if (s[i].childNodes[4].innerText != '已售完') {
+                alert(s[i].childNodes[1].innerText);
+                //0就是第一個
+            }
+        }
+    }, 1500);
+}
+
 var getChrome = (checkFun) => {
     chrome.storage.local.get("checktest", items=>{
         if(items.checktest){
@@ -221,6 +241,9 @@ var getChrome = (checkFun) => {
                 setTimeout(function(){window.location.reload();}, 30000);
             }else if(startCheck == '0' && checkFun == 'start' && domainName == 'ticket.ibon.com.tw'){
                 setTimeout(function(){ibonPush();}, 1000);
+                setTimeout(function(){window.location.reload();}, 30000);
+            }else if(startCheck == '0' && checkFun == 'start' && domainName == 'tixcraft.com'){
+                setTimeout(function(){toryunPush();}, 1000);
                 setTimeout(function(){window.location.reload();}, 30000);
             }
         }
