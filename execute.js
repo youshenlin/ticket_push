@@ -223,7 +223,7 @@ var toryunPush = () => {
     setTimeout(function(){
         var s = document.getElementsByClassName("gridc fcTxt");
         for (i = 0;i < s.length; i++) {
-            if (s[i].childNodes[4].innerText != '已售完') {
+            if ((s[i].childNodes[4].innerText != '已售完') && (s[i].childNodes[4].innerText != '選購一空')) {
                 alert(s[i].childNodes[1].innerText);
                 //0就是第一個
             }
