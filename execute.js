@@ -217,18 +217,21 @@ var toryunPush = () => {
 //document.getElementsByClassName('gridc fcTxt')[0].childNodes[1].innerText //2020/02/22 (六) 19:30
 //document.getElementsByClassName('gridc fcTxt')[0].childNodes[2].innerText  //吳青峰《太空備忘記2020》巡迴演唱會"
 //document.getElementsByClassName('gridc fcTxt')[0].childNodes[4].innerText != 已售完
-
-
-    clickForClass('btn btn-default btn-lg',0);
-    setTimeout(function(){
-        var s = document.getElementsByClassName("gridc fcTxt");
-        for (i = 0;i < s.length; i++) {
-            if ((s[i].childNodes[4].innerText != '已售完') && (s[i].childNodes[4].innerText != '選購一空')) {
-                alert(s[i].childNodes[1].innerText);
-                //0就是第一個
+    var checkSecond = location.pathname.split("/")[1];
+    if(checkSecond == 'activity'){
+        clickForClass('btn btn-default btn-lg',0);
+        setTimeout(function(){
+            var s = document.getElementsByClassName("gridc fcTxt");
+            for (i = 0;i < s.length; i++) {
+                if ((s[i].childNodes[4].innerText != '已售完') && (s[i].childNodes[4].innerText != '選購一空')) {
+                    alert(s[i].childNodes[1].innerText);
+                    //0就是第一個
+                }
             }
-        }
-    }, 1500);
+        }, 1500);
+    }else if(checkSecond == 'ticket'){
+        
+    }
 }
 
 var getChrome = (checkFun) => {
